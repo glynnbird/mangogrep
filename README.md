@@ -37,7 +37,7 @@ If neither `selector` or `where` are supplied, then all incoming data makes it t
 
 ### JSONL files
 
-JSONL files contain one JSON object per line of output. The [couchsnap](https://www.npmjs.com/package/couchsnap) utiltity creates such files, so `mangogrep` is good for finding slices of data from a single backup snapshots:
+JSONL files contain one JSON object per line of output. The [couchsnap](https://www.npmjs.com/package/couchsnap) utiltity creates such files, so `mangogrep` is good for finding slices of data from a single backup snapshot:
 
 ```sh
 # find a single document id from a single file
@@ -58,7 +58,7 @@ The query can be complex:
 cat mydb-snapshot* | mangogrep --where "(active=true OR email_verified=true) AND email='lydia.gordon@hotmail.com'"
 ```
 
-Or you can use Mango selectors:
+Or you can use Mango selectors, which unlocks per-field regular expressions:
 
 ```sh
 # use a regular expression on the email field to find all documents with hotmail email fields
