@@ -29,7 +29,7 @@ const start = async (opts) => {
 
     // debug
     if (opts.debug) {
-      console.error(opts.selector)
+      console.error(JSON.stringify(opts.selector))
     }
     
     // stream stdin --> parser --> filter --> stdout
