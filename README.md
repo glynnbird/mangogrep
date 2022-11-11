@@ -1,6 +1,6 @@
 # mangogrep
 
-A command-line utility that "greps" stdin, applying CouchDB-style Mango "selector" to the data, with matching items being passed to stdout.
+A command-line utility that "greps" stdin, applying a CouchDB-style Mango "selector" to filter the data, with matching items being passed to stdout.
 
 If we have a a "jsonl" file (one JSON object per line in a text file) (or one array of objects per line):
 
@@ -13,6 +13,7 @@ If we have a a "jsonl" file (one JSON object per line in a text file) (or one ar
 We can use `mangogrep` to extract a subset of the data:
 
 ```sh
+# find documents that contain a 'country' field whose value is 'UA'
 $ cat myfile.jsonl | mangogrep --selector '{"country":"UA"}'
 {"_id":"694864","_rev":"1-09af55b85cac9974b691abf0f621dec0","name":"Sambir","latitude":49.5183,"longitude":23.19752,"country":"UA","population":35197,"timezone":"Europe/Kiev","_revisions":{"start":1,"ids":["09af55b85cac9974b691abf0f621dec0"]}}
 ```
@@ -31,7 +32,7 @@ npm install -g mangogrep
 - `--where`/`-w` - the SQL 'where' clause to apply to the incoming data e.g. `latitude > 54.5`
 - `--debug`/`-d` - output the selector to stderr
 
-If neither `selector` or `where` are supplied, then all incoming data makes it to the output.
+If neither `selector` or `where` are supplied, then all incoming data makes it to the output, one object per line.
 
 ## Example usage
 
@@ -44,14 +45,14 @@ JSONL files contain one JSON object per line of output. The [couchsnap](https://
 cat mydb-snapshot-2022-11-09T16:04:51.041Z.jsonl | mangogrep --where "_id='0021MQOXCM3HNHAF'"
 ```
 
-or all of your backup snapshots
+or all of your backup snapshots:
 
 ```sh
 # see the history of single document id from multiple snapshot files
 cat mydb-snapshot* | mangogrep --where "_id='0021MQOXCM3HNHAF'"
 ```
 
-The query can be complex:
+The query can be complex, with lots of ANDs and ORs:
 
 ```sh
 # find documents with a combination of SQL-like AND/OR clauses
@@ -67,7 +68,7 @@ cat mydb-snapshot* | mangogrep --selector '{"email":{"$regex":"@hotmail"}}'
 
 ### Couchbackup files
 
-[@cloudant/couchbackup](https://www.npmjs.com/package/@cloudant/couchbackup) stores its backup data in text files containing an arrays of documents per line, but `mangogrep` will handle this as if they were JSONL files.
+[@cloudant/couchbackup](https://www.npmjs.com/package/@cloudant/couchbackup) stores its backup data in text files containing an array of documents per line, but `mangogrep` will handle this as if they were JSONL files.
 
 ```sh
 # backup your data
