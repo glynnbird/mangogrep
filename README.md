@@ -27,9 +27,9 @@ npm install -g mangogrep
 
 ## Usage
 
-`--selector`/`-s` - the Mango Selector to apply to the incoming data e.g. `{"latitude":{"$gt":54.5}}`
-`--where`/`-w` - the SQL 'where' clause to apply to the incoming data e.g. `latitude > 54.5`
-`--debug`/`-d` - output the selector to stderr
+- `--selector`/`-s` - the Mango Selector to apply to the incoming data e.g. `{"latitude":{"$gt":54.5}}`
+- `--where`/`-w` - the SQL 'where' clause to apply to the incoming data e.g. `latitude > 54.5`
+- `--debug`/`-d` - output the selector to stderr
 
 If neither `selector` or `where` are supplied, then all incoming data makes it to the output.
 
