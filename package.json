@@ -1,0 +1,30 @@
+{
+  "name": "mangogrep",
+  "version": "0.1.0",
+  "description": "A tool to filter stdin containing a stream of JSON with a CouchDB mango selector",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glynnbird/mangogrep.git"
+  },
+  "keywords": [
+    "CouchDB",
+    "Mango",
+    "grep"
+  ],
+  "author": "Glynn Bird <glynn.bird@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/glynnbird/mangogrep/issues"
+  },
+  "homepage": "https://github.com/glynnbird/mangogrep#readme",
+  "dependencies": {
+    "JSONStream": "^1.3.5",
+    "pouchdb-selector-core": "^7.3.0",
+    "sqltomango": "^1.3.3",
+    "yargs": "^17.6.2"
+  },
+  "bin": {
+    "mangogrep": "bin/mangogrep.bin.js"
+  }
+}
