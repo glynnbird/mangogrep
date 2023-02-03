@@ -1,6 +1,6 @@
 
 const filter = require('./filter.js')
-const JSONStream = require('JSONStream')
+const jsonpour = require('jsonpour')
 const sqltomango = require('sqltomango')
 
 // stream stdin --> parser --> filter --> stdout
@@ -34,7 +34,7 @@ const start = async (opts) => {
     
     // stream stdin --> parser --> filter --> stdout
     process.stdin
-      .pipe(JSONStream.parse())
+      .pipe(jsonpour.parse())
       .pipe(filter(opts.selector))
       .on('error', (e) => {
         reject(e)
