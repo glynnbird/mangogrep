@@ -1,6 +1,6 @@
 {
   "name": "mangogrep",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A tool to filter stdin containing a stream of JSON with a CouchDB mango selector",
   "main": "index.js",
   "repository": {
