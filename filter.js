@@ -1,5 +1,5 @@
-const stream = require('stream')
-const psc = require('pouchdb-selector-core')
+import stream from 'node:stream'
+import psc from 'pouchdb-selector-core'
 
 // quickly see if a document matches a Mango selector
 const fastMatchesSelector = (doc, massagedSelector) => {
@@ -11,7 +11,7 @@ const fastMatchesSelector = (doc, massagedSelector) => {
 }
 
 // returns a stream transformer
-module.exports = function (selector) {
+export default function (selector) {
   // pre-parse the selector
   const massagedSelector = psc.massageSelector(selector)
 

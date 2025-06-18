@@ -29,11 +29,10 @@ npm install -g mangogrep
 ## Usage
 
 - `--selector`/`-s` - the Mango Selector to apply to the incoming data e.g. `{"latitude":{"$gt":54.5}}`
-- `--where`/`-w` - the SQL 'where' clause to apply to the incoming data e.g. `latitude > 54.5`
 - `--debug`/`-d` - output the selector to stderr
 - `--help` - output help
 
-If neither `selector` or `where` are supplied, then all incoming data makes it to the output, one object per line.
+If a `selector` is not supplied, then all incoming data makes it to the output, one object per line.
 
 ## Example usage
 
@@ -43,24 +42,24 @@ JSONL files contain one JSON object per line of output. The [couchsnap](https://
 
 ```sh
 # find a single document id from a single file
-cat mydb-snapshot-2022-11-09T16:04:51.041Z.jsonl | mangogrep --where "_id='0021MQOXCM3HNHAF'"
+cat mydb-snapshot-2022-11-09T16:04:51.041Z.jsonl | mangogrep --selector '{"_id":"0021MQOXCM3HNHAF"}'
 ```
 
 or all of your backup snapshots:
 
 ```sh
 # see the history of single document id from multiple snapshot files
-cat mydb-snapshot* | mangogrep --where "_id='0021MQOXCM3HNHAF'"
+cat mydb-snapshot* | mangogrep --selector '{"_id":"0021MQOXCM3HNHAF"}'
 ```
 
 The query can be complex, with lots of ANDs and ORs:
 
 ```sh
-# find documents with a combination of SQL-like AND/OR clauses
-cat mydb-snapshot* | mangogrep --where "(active=true OR email_verified=true) AND email='lydia.gordon@hotmail.com'"
+# find documents with a combination mango clauses
+cat mydb-snapshot* | mangogrep --selector '{"country": "IN","population":{"$gt":5000000}}'
 ```
 
-Or you can use Mango selectors, which unlocks per-field regular expressions:
+Or you can use per-field regular expressions:
 
 ```sh
 # use a regular expression on the email field to find all documents with hotmail email fields
@@ -76,7 +75,7 @@ cat mydb-snapshot* | mangogrep --selector '{"email":{"$regex":"@hotmail"}}'
 couchbackup --db users > users.txt
 
 # query the backup data set, piping the output to a file
-cat users.txt | mangogrep --where "joined>'2022-01-01'" > 2022_users.jsonl
+cat users.txt | mangogrep --selector '{"joined":{"$gte":"2022-01-01"}}' > 2022_users.jsonl
 ```
 
 ## Aggregation
@@ -85,5 +84,5 @@ You may combine `mangogrep` with other command-line tools for aggregating answer
 
 ```sh
 # count users who joined this year and are active
-cat users.txt | mangogrep --where "joined>'2022-01-01' AND active=true" | wc -l
+cat users.txt | mangogrep '{"joined":{"$gte":"2022-01-01"},"active":true}' | wc -l
 ```

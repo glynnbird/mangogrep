@@ -1,21 +1,12 @@
 
-const filter = require('./filter.js')
-const jsonpour = require('jsonpour')
-const sqltomango = require('sqltomango')
+import * as jsonpour from 'jsonpour'
+import filter from './filter.js'
 
 // stream stdin --> parser --> filter --> stdout
-const start = async (opts) => {
+export async function start(opts) {
   return new Promise((resolve, reject) => {
 
-    if (opts.where) {
-      // convert where to a Mango selector
-      try {
-        const parsed = sqltomango.parse(`SELECT * FROM temp WHERE ${opts.where}`)
-        opts.selector = parsed.selector
-      } catch (e) {
-        return reject(new Error('invalid where SQL'))
-      }
-    } else if (opts.selector) {
+   if (opts.selector) {
       // just JSON.parse the incoming selector
       try {
         opts.selector = JSON.parse(opts.selector)
@@ -23,7 +14,7 @@ const start = async (opts) => {
         return reject(new Error('invalid selector JSON'))
       }
     } else {
-      // if neither where nor selector or supplied, select everything
+      // if no selector is supplied, select everything
       opts.selector = {}
     }
 
@@ -46,4 +37,3 @@ const start = async (opts) => {
   })
 }
 
-module.exports = { start }

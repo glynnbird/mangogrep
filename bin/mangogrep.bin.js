@@ -1,15 +1,18 @@
 #!/usr/bin/env node
+
+import { parseArgs } from 'node:util'
+import path from 'node:path'
+import { readFileSync } from 'node:fs'
+import * as mangogrep from '../index.js'
+
 const egSelector = '{"name":"Bob","date":{"$gt":"2022-01-01"}}'
-const egSQL = "name='Bob' AND date > '2022-01-01'" 
 const syntax = 
 `Syntax:
 --selector/-s            Mango selector e.g. ${egSelector}
---where/-w               SQL where clause e.g. ${egSQL}
 --debug                  Output selector to stderr (default: false)
 --version/v              Show app version  (default: false)
 `
-const app = require('../package.json')
-const { parseArgs } = require('node:util')
+const app = JSON.parse(readFileSync(path.join(import.meta.dirname, '..', 'package.json'), { encoding: 'utf8' }))
 const argv = process.argv.slice(2)
 const options = {
   selector: {
@@ -51,5 +54,4 @@ if (values.help) {
 }
 
 // start the snapshot
-const mangogrep = require('../index.js')
 mangogrep.start(values).catch((e) => { console.error(e.toString())})
