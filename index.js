@@ -1,12 +1,21 @@
 
 import * as jsonpour from 'jsonpour'
+import * as sqltomango from 'sqltomango'
 import filter from './filter.js'
 
 // stream stdin --> parser --> filter --> stdout
 export async function start(opts) {
   return new Promise((resolve, reject) => {
 
-   if (opts.selector) {
+    if (opts.where) {
+      // convert where to a Mango selector
+      try {
+        const parsed = sqltomango.parse(`SELECT * FROM temp WHERE ${opts.where}`)
+        opts.selector = parsed.selector
+      } catch (e) {
+        return reject(new Error('invalid where SQL'))
+      }
+    } else if (opts.selector) {
       // just JSON.parse the incoming selector
       try {
         opts.selector = JSON.parse(opts.selector)
@@ -22,7 +31,7 @@ export async function start(opts) {
     if (opts.debug) {
       console.error(JSON.stringify(opts.selector))
     }
-    
+
     // stream stdin --> parser --> filter --> stdout
     process.stdin
       .pipe(jsonpour.parse())

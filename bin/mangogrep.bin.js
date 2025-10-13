@@ -9,6 +9,7 @@ const egSelector = '{"name":"Bob","date":{"$gt":"2022-01-01"}}'
 const syntax = 
 `Syntax:
 --selector/-s            Mango selector e.g. ${egSelector}
+--where/-w.              Where part of SQL query e.g. "name='Bob' AND date>'2022-01-01'"
 --debug                  Output selector to stderr (default: false)
 --version/v              Show app version  (default: false)
 `

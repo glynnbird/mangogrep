@@ -1,6 +1,6 @@
 {
   "name": "mangogrep",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "description": "A tool to filter stdin containing a stream of JSON with a CouchDB mango selector",
   "main": "index.js",
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/glynnbird/mangogrep#readme",
   "dependencies": {
     "jsonpour": "^2.0.1",
-    "pouchdb-selector-core": "^9.0.0"
+    "pouchdb-selector-core": "^9.0.0",
+    "sqltomango": "^2.0.1"
   },
   "bin": {
     "mangogrep": "bin/mangogrep.bin.js"

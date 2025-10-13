@@ -29,10 +29,11 @@ npm install -g mangogrep
 ## Usage
 
 - `--selector`/`-s` - the Mango Selector to apply to the incoming data e.g. `{"latitude":{"$gt":54.5}}`
+- `--where`/`-w` - the where part of a SQL query e.g. `"latitude>54.4"`
 - `--debug`/`-d` - output the selector to stderr
 - `--help` - output help
 
-If a `selector` is not supplied, then all incoming data makes it to the output, one object per line.
+If one of  `selector` or `where` are not supplied, then all incoming data makes it to the output, one object per line.
 
 ## Example usage
 
@@ -57,6 +58,13 @@ The query can be complex, with lots of ANDs and ORs:
 ```sh
 # find documents with a combination mango clauses
 cat mydb-snapshot* | mangogrep --selector '{"country": "IN","population":{"$gt":5000000}}'
+```
+
+or can be expressed as a sql 'where' clause:
+
+```sh
+# find documents with a combination of SQL-like AND/OR clauses
+cat mydb-snapshot* | mangogrep --where "(active=true OR email_verified=true) AND email='lydia.gordon@hotmail.com'"
 ```
 
 Or you can use per-field regular expressions:
